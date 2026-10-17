@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuronatica - Technology for Living</title>
+    <meta name="description" content="We build technology so people can live more and manage less. Human-centered AI that works for you.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2360a5fa'/%3E%3Cstop offset='100%25' style='stop-color:%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='25' cy='25' r='23' stroke='url(%23g)' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='25' cy='25' r='5' fill='url(%23g)'/%3E%3Ccircle cx='25' cy='25' r='3' fill='white'/%3E%3Cg stroke='url(%23g)' stroke-width='1.8'%3E%3Cline x1='25' y1='5' x2='25' y2='20'/%3E%3Cline x1='25' y1='30' x2='25' y2='45'/%3E%3Cline x1='5' y1='25' x2='20' y2='25'/%3E%3Cline x1='30' y1='25' x2='45' y2='25'/%3E%3C/g%3E%3Ccircle cx='25' cy='5' r='2.5' fill='url(%23g)'/%3E%3Ccircle cx='25' cy='45' r='2.5' fill='url(%23g)'/%3E%3Ccircle cx='5' cy='25' r='2.5' fill='url(%23g)'/%3E%3Ccircle cx='45' cy='25' r='2.5' fill='url(%23g)'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #60a5fa;
+            --primary-purple: #a78bfa;
+            --accent-green: #22c55e;
+            --accent-yellow: #fbbf24;
+            --accent-red: #ef4444;
+            --dark-navy: #0a1628;
+            --medium-navy: #1e3a5f;
+            --text-white: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-navy);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 50px;
+            background: rgba(10, 22, 40, 0.95);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 400;
+            text-decoration: none;
+            color: var(--text-white);
+        }
+
+        .nav-logo svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .nav-logo .letter-r { color: var(--accent-green); }
+        .nav-logo .letter-t { color: var(--accent-yellow); }
+        .nav-logo .letter-a2 { color: var(--accent-red); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-white);
+        }
+
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-toggle span {
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .lang-toggle span.active {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .lang-toggle .divider {
+            color: var(--glass-border);
+        }
+
+        /* Sections base */
+        section {
+            min-height: 100vh;
+            padding: 120px 50px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        .hero-tagline {
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .hero-title {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-title strong {
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.9s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.3);
+        }
+
+        .hero-cta svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(5px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.5s;
+        }
+
+        .scroll-indicator span {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--primary-blue), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* Vision Section */
+        #vision {
+            background: linear-gradient(180deg, var(--dark-navy) 0%, var(--medium-navy) 50%, var(--dark-navy) 100%);
+        }
+
+        .vision-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .vision-statement {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+
+        .vision-statement .highlight {
+            color: var(--primary-blue);
+        }
+
+        .vision-text {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .vision-beliefs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .belief-card {
+            padding: 30px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .belief-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            background: rgba(96, 165, 250, 0.05);
+        }
+
+        .belief-card h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .belief-card h3 .icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .belief-card:nth-child(1) h3 .icon { background: var(--accent-green); }
+        .belief-card:nth-child(2) h3 .icon { background: var(--accent-yellow); }
+        .belief-card:nth-child(3) h3 .icon { background: var(--accent-red); }
+
+        .belief-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* AI Architecture Section */
+        #ai-architecture {
+            background: var(--dark-navy);
+        }
+
+        .ai-section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .ai-section-header h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .ai-section-header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .architecture-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .architecture-diagram {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .architecture-layer {
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-layer::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--glass-border);
+            transition: background 0.3s ease;
+        }
+
+        .architecture-layer:nth-child(1)::before { background: var(--primary-blue); }
+        .architecture-layer:nth-child(2)::before { background: var(--primary-purple); }
+        .architecture-layer:nth-child(3)::before { background: var(--accent-green); }
+        .architecture-layer:nth-child(4)::before { background: var(--accent-yellow); }
+        .architecture-layer:nth-child(5)::before { background: var(--accent-red); }
+
+        .architecture-layer:hover, .architecture-layer.active {
+            background: rgba(96, 165, 250, 0.08);
+            border-color: var(--primary-blue);
+            transform: translateX(10px);
+        }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .layer-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .layer-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .architecture-layer:hover .layer-icon,
+        .architecture-layer.active .layer-icon {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        .layer-connector {
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--glass-border), transparent);
+        }
+
+        .architecture-layer:last-child .layer-connector {
+            display: none;
+        }
+
+        .architecture-details {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        .detail-card {
+            padding: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: none;
+        }
+
+        .detail-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .detail-card h3 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .detail-card h3 .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .detail-card p {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .detail-card ul {
+            list-style: none;
+        }
+
+        .detail-card ul li {
+            padding: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .detail-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+        }
+
+        /* Human-Centered AI Section */
+        #human-ai {
+            background: linear-gradient(180deg, var(--dark-navy) 0%, var(--medium-navy) 100%);
+            overflow: hidden;
+        }
+
+        .human-ai-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .neural-visualization {
+            position: relative;
+            height: 500px;
+        }
+
+        #neural-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .human-ai-content h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .human-ai-content h2 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .human-ai-content > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .principles {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .principle {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .principle:hover {
+            border-color: var(--primary-blue);
+            background: rgba(96, 165, 250, 0.05);
+        }
+
+        .principle-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .principle:nth-child(1) .principle-icon { background: rgba(34, 197, 94, 0.2); }
+        .principle:nth-child(2) .principle-icon { background: rgba(96, 165, 250, 0.2); }
+        .principle:nth-child(3) .principle-icon { background: rgba(251, 191, 36, 0.2); }
+
+        .principle-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .principle:nth-child(1) .principle-icon svg { color: var(--accent-green); }
+        .principle:nth-child(2) .principle-icon svg { color: var(--primary-blue); }
+        .principle:nth-child(3) .principle-icon svg { color: var(--accent-yellow); }
+
+        .principle-content h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .principle-content p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* What's Coming Section */
+        #coming {
+            background: var(--dark-navy);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .coming-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .coming-content h2 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .coming-content h2 .mystery {
+            display: block;
+            font-size: clamp(48px, 7vw, 80px);
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .coming-content > p {
+            font-size: 20px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+
+        .teaser-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .teaser-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .teaser-feature .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            animation: dotPulse 2s ease infinite;
+        }
+
+        .teaser-feature:nth-child(2) .dot { 
+            background: var(--accent-green);
+            animation-delay: 0.3s;
+        }
+        .teaser-feature:nth-child(3) .dot { 
+            background: var(--accent-yellow);
+            animation-delay: 0.6s;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .notify-form {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .notify-form input {
+            padding: 16px 24px;
+            width: 300px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            color: var(--text-white);
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .notify-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .notify-form input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: rgba(96, 165, 250, 0.05);
+        }
+
+        .notify-form button {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notify-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(96, 165, 250, 0.3);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(180deg, var(--dark-navy) 0%, #050d18 100%);
+            min-height: auto;
+            padding: 100px 50px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .contact-info > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .contact-link svg {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+        }
+
+        .contact-form-wrapper {
+            padding: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-white);
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(96, 165, 250, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #050d18;
+            padding: 40px 50px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+        }
+
+        .footer-logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-logo .letter-r { color: var(--accent-green); }
+        .footer-logo .letter-t { color: var(--accent-yellow); }
+        .footer-logo .letter-a2 { color: var(--accent-red); }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer-copy a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            section {
+                padding: 100px 30px;
+            }
+
+            nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .human-ai-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .neural-visualization {
+                height: 350px;
+                order: -1;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .architecture-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 20px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-logo {
+                font-size: 20px;
+            }
+
+            .nav-logo svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .vision-beliefs {
+                grid-template-columns: 1fr;
+            }
+
+            .teaser-features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .notify-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .notify-form input {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            footer {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-white);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#hero" class="nav-logo">
+            <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="navGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#60a5fa" />
+                        <stop offset="100%" style="stop-color:#a78bfa" />
+                    </linearGradient>
+                </defs>
+                <circle cx="25" cy="25" r="23" stroke="url(#navGradient)" stroke-width="1.5" fill="none" opacity="0.8"/>
+                <circle cx="25" cy="25" r="5" fill="url(#navGradient)"/>
+                <circle cx="25" cy="25" r="3" fill="white" opacity="0.9"/>
+                <g stroke="url(#navGradient)" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="25" y1="5" x2="25" y2="20"/>
+                    <line x1="25" y1="30" x2="25" y2="45"/>
+                    <line x1="5" y1="25" x2="20" y2="25"/>
+                    <line x1="30" y1="25" x2="45" y2="25"/>
+                </g>
+                <circle cx="25" cy="5" r="2.5" fill="url(#navGradient)"/>
+                <circle cx="25" cy="45" r="2.5" fill="url(#navGradient)"/>
+                <circle cx="5" cy="25" r="2.5" fill="url(#navGradient)"/>
+                <circle cx="45" cy="25" r="2.5" fill="url(#navGradient)"/>
+            </svg>
+            <span>neu<span class="letter-r">r</span>ona<span class="letter-t">t</span>ic<span class="letter-a2">a</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="#vision" data-en="Vision" data-es="Visión">Vision</a>
+            <a href="#ai-architecture" data-en="How AI Works" data-es="Cómo funciona la IA">How AI Works</a>
+            <a href="#human-ai" data-en="Human-Centered AI" data-es="IA Centrada en el Humano">Human-Centered AI</a>
+            <a href="#coming" data-en="What's Coming" data-es="Lo que viene">What's Coming</a>
+            <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
+        </div>
+        <div class="lang-toggle" onclick="toggleLanguage()">
+            <span id="lang-en" class="active">EN</span>
+            <span class="divider">|</span>
+            <span id="lang-es">ES</span>
+        </div>
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <p class="hero-tagline" data-en="Redefining Human-Technology Interaction" data-es="Redefiniendo la interacción humano-tecnología">Redefining Human-Technology Interaction</p>
+            <h1 class="hero-title">
+                <span data-en="Technology for" data-es="Tecnología para">Technology for</span> <strong data-en="Living" data-es="Vivir">Living</strong><br>
+                <span data-en="Not for Managing" data-es="No para Gestionar">Not for Managing</span>
+            </h1>
+            <p class="hero-subtitle" data-en="We build intelligent systems that work for humans, so you can focus on what truly matters." data-es="Construimos sistemas inteligentes que trabajan para los humanos, para que puedas enfocarte en lo que realmente importa.">We build intelligent systems that work for humans, so you can focus on what truly matters.</p>
+            <a href="#vision" class="hero-cta">
+                <span data-en="Discover Our Vision" data-es="Descubre Nuestra Visión">Discover Our Vision</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span data-en="SCROLL" data-es="DESLIZA">SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision">
+        <div class="section-container">
+            <div class="vision-content reveal">
+                <p class="section-label" data-en="Our Vision" data-es="Nuestra Visión">Our Vision</p>
+                <h2 class="vision-statement">
+                    <span data-en="The relationship between people and what they need is" data-es="La relación entre las personas y lo que necesitan está">The relationship between people and what they need is</span> <span class="highlight" data-en="broken." data-es="rota.">broken.</span>
+                </h2>
+                <p class="vision-text" data-en="Too many steps. Too many apps. Too much time lost in processes that should be invisible. We live in a world of endless options and constant friction." data-es="Demasiados pasos. Demasiadas apps. Demasiado tiempo perdido en procesos que deberían ser invisibles. Vivimos en un mundo de opciones infinitas y fricción constante.">Too many steps. Too many apps. Too much time lost in processes that should be invisible. We live in a world of endless options and constant friction.</p>
+                <p class="vision-text" data-en="We're working to change that." data-es="Estamos trabajando para cambiar eso.">We're working to change that.</p>
+            </div>
+            <div class="vision-beliefs reveal">
+                <div class="belief-card">
+                    <h3><span class="icon"></span><span data-en="Simplicity is Power" data-es="La Simplicidad es Poder">Simplicity is Power</span></h3>
+                    <p data-en="The most sophisticated technology is the one you don't notice. True intelligence removes complexity, it doesn't add it." data-es="La tecnología más sofisticada es la que no notas. La verdadera inteligencia elimina complejidad, no la añade.">The most sophisticated technology is the one you don't notice. True intelligence removes complexity, it doesn't add it.</p>
+                </div>
+                <div class="belief-card">
+                    <h3><span class="icon"></span><span data-en="Humans First" data-es="Humanos Primero">Humans First</span></h3>
+                    <p data-en="AI should amplify human potential, not replace human agency. Every system we build serves the person, not the other way around." data-es="La IA debe amplificar el potencial humano, no reemplazar la autonomía humana. Cada sistema que construimos sirve a la persona, no al revés.">AI should amplify human potential, not replace human agency. Every system we build serves the person, not the other way around.</p>
+                </div>
+                <div class="belief-card">
+                    <h3><span class="icon"></span><span data-en="Action Over Information" data-es="Acción Sobre Información">Action Over Information</span></h3>
+                    <p data-en="Information is abundant. What's scarce is resolution. We don't give you more data—we give you results." data-es="La información es abundante. Lo que escasea es la resolución. No te damos más datos—te damos resultados.">Information is abundant. What's scarce is resolution. We don't give you more data—we give you results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Architecture Section -->
+    <section id="ai-architecture">
+        <div class="section-container">
+            <div class="ai-section-header reveal">
+                <p class="section-label" data-en="Understanding AI" data-es="Entendiendo la IA">Understanding AI</p>
+                <h2 data-en="How Intelligent Agents Work" data-es="Cómo Funcionan los Agentes Inteligentes">How Intelligent Agents Work</h2>
+                <p data-en="Modern AI systems process information through multiple specialized layers. Click each layer to explore." data-es="Los sistemas de IA modernos procesan información a través de múltiples capas especializadas. Haz clic en cada capa para explorar.">Modern AI systems process information through multiple specialized layers. Click each layer to explore.</p>
+            </div>
+            <div class="architecture-container reveal">
+                <div class="architecture-diagram">
+                    <div class="architecture-layer active" data-layer="input">
+                        <div class="layer-header">
+                            <span class="layer-title" data-en="Input Layer" data-es="Capa de Entrada">Input Layer</span>
+                            <svg class="layer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <div class="layer-connector"></div>
+                    </div>
+                    <div class="architecture-layer" data-layer="understanding">
+                        <div class="layer-header">
+                            <span class="layer-title" data-en="Understanding Layer" data-es="Capa de Comprensión">Understanding Layer</span>
+                            <svg class="layer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <div class="layer-connector"></div>
+                    </div>
+                    <div class="architecture-layer" data-layer="reasoning">
+                        <div class="layer-header">
+                            <span class="layer-title" data-en="Reasoning Layer" data-es="Capa de Razonamiento">Reasoning Layer</span>
+                            <svg class="layer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <div class="layer-connector"></div>
+                    </div>
+                    <div class="architecture-layer" data-layer="action">
+                        <div class="layer-header">
+                            <span class="layer-title" data-en="Action Layer" data-es="Capa de Acción">Action Layer</span>
+                            <svg class="layer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <div class="layer-connector"></div>
+                    </div>
+                    <div class="architecture-layer" data-layer="output">
+                        <div class="layer-header">
+                            <span class="layer-title" data-en="Output Layer" data-es="Capa de Salida">Output Layer</span>
+                            <svg class="layer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="architecture-details">
+                    <div class="detail-card active" id="detail-input">
+                        <h3><span class="dot" style="background: var(--primary-blue)"></span><span data-en="Input Layer" data-es="Capa de Entrada">Input Layer</span></h3>
+                        <p data-en="The entry point where human intentions meet artificial intelligence. This layer captures and processes multiple forms of communication." data-es="El punto de entrada donde las intenciones humanas se encuentran con la inteligencia artificial. Esta capa captura y procesa múltiples formas de comunicación.">The entry point where human intentions meet artificial intelligence. This layer captures and processes multiple forms of communication.</p>
+                        <ul>
+                            <li data-en="Voice recognition and natural speech processing" data-es="Reconocimiento de voz y procesamiento del habla natural">Voice recognition and natural speech processing</li>
+                            <li data-en="Text input with context awareness" data-es="Entrada de texto con conciencia del contexto">Text input with context awareness</li>
+                            <li data-en="Multi-modal data integration" data-es="Integración de datos multimodal">Multi-modal data integration</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card" id="detail-understanding">
+                        <h3><span class="dot" style="background: var(--primary-purple)"></span><span data-en="Understanding Layer" data-es="Capa de Comprensión">Understanding Layer</span></h3>
+                        <p data-en="Where raw input transforms into meaning. Advanced NLP models decode not just words, but intent, emotion, and context." data-es="Donde la entrada cruda se transforma en significado. Modelos avanzados de NLP decodifican no solo palabras, sino intención, emoción y contexto.">Where raw input transforms into meaning. Advanced NLP models decode not just words, but intent, emotion, and context.</p>
+                        <ul>
+                            <li data-en="Intent recognition and classification" data-es="Reconocimiento y clasificación de intención">Intent recognition and classification</li>
+                            <li data-en="Semantic analysis and entity extraction" data-es="Análisis semántico y extracción de entidades">Semantic analysis and entity extraction</li>
+                            <li data-en="Contextual memory integration" data-es="Integración de memoria contextual">Contextual memory integration</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card" id="detail-reasoning">
+                        <h3><span class="dot" style="background: var(--accent-green)"></span><span data-en="Reasoning Layer" data-es="Capa de Razonamiento">Reasoning Layer</span></h3>
+                        <p data-en="The cognitive core. Here, the system weighs options, considers constraints, and formulates optimal strategies to fulfill the user's needs." data-es="El núcleo cognitivo. Aquí, el sistema evalúa opciones, considera restricciones y formula estrategias óptimas para satisfacer las necesidades del usuario.">The cognitive core. Here, the system weighs options, considers constraints, and formulates optimal strategies to fulfill the user's needs.</p>
+                        <ul>
+                            <li data-en="Logic-based decision frameworks" data-es="Marcos de decisión basados en lógica">Logic-based decision frameworks</li>
+                            <li data-en="Constraint satisfaction and optimization" data-es="Satisfacción de restricciones y optimización">Constraint satisfaction and optimization</li>
+                            <li data-en="Predictive modeling and planning" data-es="Modelado predictivo y planificación">Predictive modeling and planning</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card" id="detail-action">
+                        <h3><span class="dot" style="background: var(--accent-yellow)"></span><span data-en="Action Layer" data-es="Capa de Acción">Action Layer</span></h3>
+                        <p data-en="Where decisions become reality. This layer orchestrates external systems, APIs, and services to execute tasks in the real world." data-es="Donde las decisiones se vuelven realidad. Esta capa orquesta sistemas externos, APIs y servicios para ejecutar tareas en el mundo real.">Where decisions become reality. This layer orchestrates external systems, APIs, and services to execute tasks in the real world.</p>
+                        <ul>
+                            <li data-en="API orchestration and integration" data-es="Orquestación e integración de APIs">API orchestration and integration</li>
+                            <li data-en="Transaction processing and verification" data-es="Procesamiento y verificación de transacciones">Transaction processing and verification</li>
+                            <li data-en="Real-time system coordination" data-es="Coordinación de sistemas en tiempo real">Real-time system coordination</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card" id="detail-output">
+                        <h3><span class="dot" style="background: var(--accent-red)"></span><span data-en="Output Layer" data-es="Capa de Salida">Output Layer</span></h3>
+                        <p data-en="The final delivery. Results are communicated back to the user in the most appropriate format—conversational, visual, or direct action." data-es="La entrega final. Los resultados se comunican al usuario en el formato más apropiado—conversacional, visual o acción directa.">The final delivery. Results are communicated back to the user in the most appropriate format—conversational, visual, or direct action.</p>
+                        <ul>
+                            <li data-en="Natural language response generation" data-es="Generación de respuestas en lenguaje natural">Natural language response generation</li>
+                            <li data-en="Multi-channel delivery optimization" data-es="Optimización de entrega multicanal">Multi-channel delivery optimization</li>
+                            <li data-en="Feedback loop integration" data-es="Integración de ciclo de retroalimentación">Feedback loop integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Human-Centered AI Section -->
+    <section id="human-ai">
+        <div class="section-container">
+            <div class="human-ai-container">
+                <div class="neural-visualization reveal">
+                    <canvas id="neural-canvas"></canvas>
+                </div>
+                <div class="human-ai-content reveal">
+                    <p class="section-label" data-en="Our Approach" data-es="Nuestro Enfoque">Our Approach</p>
+                    <h2>
+                        <span data-en="Before teaching a machine to act," data-es="Antes de enseñarle a una máquina a actuar,">Before teaching a machine to act,</span><br>
+                        <span class="gradient-text" data-en="we study how humans think." data-es="estudiamos cómo piensan los humanos.">we study how humans think.</span>
+                    </h2>
+                    <p data-en="At Neuronatica, we bridge neuroscience and artificial intelligence. We analyze human cognitive patterns, decision-making processes, and behavioral signals to build AI that truly serves human needs—without compromising safety or autonomy." data-es="En Neuronatica, conectamos neurociencia e inteligencia artificial. Analizamos patrones cognitivos humanos, procesos de toma de decisiones y señales de comportamiento para construir IA que verdaderamente sirva las necesidades humanas—sin comprometer la seguridad o autonomía.">At Neuronatica, we bridge neuroscience and artificial intelligence. We analyze human cognitive patterns, decision-making processes, and behavioral signals to build AI that truly serves human needs—without compromising safety or autonomy.</p>
+                    <div class="principles">
+                        <div class="principle">
+                            <div class="principle-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <div class="principle-content">
+                                <h4 data-en="Safety by Design" data-es="Seguridad por Diseño">Safety by Design</h4>
+                                <p data-en="Every system we build has human safety as its foundational principle. AI should never put a person at risk." data-es="Cada sistema que construimos tiene la seguridad humana como principio fundamental. La IA nunca debe poner a una persona en riesgo.">Every system we build has human safety as its foundational principle. AI should never put a person at risk.</p>
+                            </div>
+                        </div>
+                        <div class="principle">
+                            <div class="principle-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </div>
+                            <div class="principle-content">
+                                <h4 data-en="Transparent Operations" data-es="Operaciones Transparentes">Transparent Operations</h4>
+                                <p data-en="Users always know what our AI is doing and why. No black boxes, no hidden agendas." data-es="Los usuarios siempre saben qué está haciendo nuestra IA y por qué. Sin cajas negras, sin agendas ocultas.">Users always know what our AI is doing and why. No black boxes, no hidden agendas.</p>
+                            </div>
+                        </div>
+                        <div class="principle">
+                            <div class="principle-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+                            <div class="principle-content">
+                                <h4 data-en="Human Autonomy" data-es="Autonomía Humana">Human Autonomy</h4>
+                                <p data-en="AI enhances decisions, never replaces them. The human always remains in control." data-es="La IA mejora las decisiones, nunca las reemplaza. El humano siempre mantiene el control.">AI enhances decisions, never replaces them. The human always remains in control.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Coming Section -->
+    <section id="coming">
+        <div class="coming-bg"></div>
+        <div class="coming-content reveal">
+            <p class="section-label" data-en="The Future" data-es="El Futuro">The Future</p>
+            <h2>
+                <span data-en="Something new is taking shape." data-es="Algo nuevo está tomando forma.">Something new is taking shape.</span>
+                <span class="mystery" data-en="Express. It happens." data-es="Expresá. Ocurre.">Express. It happens.</span>
+            </h2>
+            <p data-en="We can't tell you everything yet. But when you see it, you'll understand why we've been working in silence." data-es="No podemos contarte todo todavía. Pero cuando lo veas, entenderás por qué hemos estado trabajando en silencio.">We can't tell you everything yet. But when you see it, you'll understand why we've been working in silence.</p>
+            <div class="teaser-features">
+                <div class="teaser-feature">
+                    <span class="dot"></span>
+                    <span data-en="Zero friction" data-es="Cero fricción">Zero friction</span>
+                </div>
+                <div class="teaser-feature">
+                    <span class="dot"></span>
+                    <span data-en="Zero management" data-es="Cero gestión">Zero management</span>
+                </div>
+                <div class="teaser-feature">
+                    <span class="dot"></span>
+                    <span data-en="Pure resolution" data-es="Pura resolución">Pure resolution</span>
+                </div>
+            </div>
+            <form class="notify-form" onsubmit="handleNotify(event)">
+                <input type="email" placeholder="Enter your email" data-placeholder-en="Enter your email" data-placeholder-es="Ingresa tu email" required>
+                <button type="submit" data-en="Notify Me" data-es="Notifícame">Notify Me</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="contact-container">
+            <div class="contact-info reveal">
+                <p class="section-label" data-en="Get in Touch" data-es="Contáctanos">Get in Touch</p>
+                <h2 data-en="Let's Talk" data-es="Hablemos">Let's Talk</h2>
+                <p data-en="Whether you're curious about our vision, interested in partnership opportunities, or want to be part of what we're building—we'd love to hear from you." data-es="Ya sea que tengas curiosidad sobre nuestra visión, interés en oportunidades de colaboración, o quieras ser parte de lo que estamos construyendo—nos encantaría saber de ti.">Whether you're curious about our vision, interested in partnership opportunities, or want to be part of what we're building—we'd love to hear from you.</p>
+                <div class="contact-links">
+                    <a href="mailto:hello@neuronatica.com" class="contact-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        hello@neuronatica.com
+                    </a>
+                    <a href="https://linkedin.com/company/neuronatica" class="contact-link" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+            <div class="contact-form-wrapper reveal">
+                <form class="contact-form" onsubmit="handleContact(event)">
+                    <div class="form-group">
+                        <label data-en="Name" data-es="Nombre">Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="Email" data-es="Correo electrónico">Email</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="Message" data-es="Mensaje">Message</label>
+                        <textarea required></textarea>
+                    </div>
+                    <button type="submit" data-en="Send Message" data-es="Enviar Mensaje">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#60a5fa" />
+                            <stop offset="100%" style="stop-color:#a78bfa" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="25" cy="25" r="23" stroke="url(#footerGradient)" stroke-width="1.5" fill="none" opacity="0.8"/>
+                    <circle cx="25" cy="25" r="5" fill="url(#footerGradient)"/>
+                    <circle cx="25" cy="25" r="3" fill="white" opacity="0.9"/>
+                    <g stroke="url(#footerGradient)" stroke-width="1.8" stroke-linecap="round">
+                        <line x1="25" y1="5" x2="25" y2="20"/>
+                        <line x1="25" y1="30" x2="25" y2="45"/>
+                        <line x1="5" y1="25" x2="20" y2="25"/>
+                        <line x1="30" y1="25" x2="45" y2="25"/>
+                    </g>
+                    <circle cx="25" cy="5" r="2.5" fill="url(#footerGradient)"/>
+                    <circle cx="25" cy="45" r="2.5" fill="url(#footerGradient)"/>
+                    <circle cx="5" cy="25" r="2.5" fill="url(#footerGradient)"/>
+                    <circle cx="45" cy="25" r="2.5" fill="url(#footerGradient)"/>
+                </svg>
+                <span>neu<span class="letter-r">r</span>ona<span class="letter-t">t</span>ic<span class="letter-a2">a</span></span>
+            </div>
+            <div class="footer-copy">
+                <span data-en="© 2025 Neuronatica. Innovation driven by data." data-es="© 2025 Neuronatica. Innovación impulsada por datos.">© 2025 Neuronatica. Innovation driven by data.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+            document.getElementById('lang-es').classList.toggle('active', currentLang === 'es');
+            
+            // Update all text elements
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+                el.placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
+            });
+        }
+
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // AI Architecture interactive layers
+        const layers = document.querySelectorAll('.architecture-layer');
+        const details = document.querySelectorAll('.detail-card');
+
+        layers.forEach(layer => {
+            layer.addEventListener('click', () => {
+                const layerName = layer.getAttribute('data-layer');
+                
+                layers.forEach(l => l.classList.remove('active'));
+                layer.classList.add('active');
+                
+                details.forEach(d => d.classList.remove('active'));
+                document.getElementById(`detail-${layerName}`).classList.add('active');
+            });
+        });
+
+        // Hero Canvas - Particle System
+        const heroCanvas = document.getElementById('hero-canvas');
+        const heroCtx = heroCanvas.getContext('2d');
+
+        function resizeHeroCanvas() {
+            heroCanvas.width = window.innerWidth;
+            heroCanvas.height = window.innerHeight;
+        }
+        resizeHeroCanvas();
+        window.addEventListener('resize', resizeHeroCanvas);
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * heroCanvas.width;
+                this.y = Math.random() * heroCanvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = ['#60a5fa', '#a78bfa', '#22c55e', '#fbbf24'][Math.floor(Math.random() * 4)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > heroCanvas.width || this.y < 0 || this.y > heroCanvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                heroCtx.beginPath();
+                heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                heroCtx.fillStyle = this.color;
+                heroCtx.globalAlpha = this.opacity;
+                heroCtx.fill();
+                heroCtx.globalAlpha = 1;
+            }
+        }
+
+        const particles = Array.from({ length: 100 }, () => new Particle());
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        heroCtx.beginPath();
+                        heroCtx.strokeStyle = `rgba(96, 165, 250, ${0.1 * (1 - distance / 150)})`;
+                        heroCtx.lineWidth = 0.5;
+                        heroCtx.moveTo(particles[i].x, particles[i].y);
+                        heroCtx.lineTo(particles[j].x, particles[j].y);
+                        heroCtx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateHero() {
+            heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            connectParticles();
+            requestAnimationFrame(animateHero);
+        }
+        animateHero();
+
+        // Neural Canvas - Brain Network Visualization
+        const neuralCanvas = document.getElementById('neural-canvas');
+        const neuralCtx = neuralCanvas.getContext('2d');
+
+        function resizeNeuralCanvas() {
+            const container = neuralCanvas.parentElement;
+            neuralCanvas.width = container.offsetWidth;
+            neuralCanvas.height = container.offsetHeight;
+        }
+        resizeNeuralCanvas();
+        window.addEventListener('resize', resizeNeuralCanvas);
+
+        class Neuron {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.baseRadius = Math.random() * 3 + 2;
+                this.radius = this.baseRadius;
+                this.pulsePhase = Math.random() * Math.PI * 2;
+                this.connections = [];
+                this.firing = false;
+                this.fireTimer = 0;
+            }
+
+            pulse(time) {
+                this.radius = this.baseRadius + Math.sin(time * 0.002 + this.pulsePhase) * 1;
+                
+                if (Math.random() < 0.001) {
+                    this.firing = true;
+                    this.fireTimer = 30;
+                }
+
+                if (this.firing) {
+                    this.fireTimer--;
+                    if (this.fireTimer <= 0) {
+                        this.firing = false;
+                    }
+                }
+            }
+
+            draw() {
+                const gradient = neuralCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 2);
+                
+                if (this.firing) {
+                    gradient.addColorStop(0, 'rgba(34, 197, 94, 1)');
+                    gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.5)');
+                    gradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
+                } else {
+                    gradient.addColorStop(0, 'rgba(96, 165, 250, 0.8)');
+                    gradient.addColorStop(0.5, 'rgba(167, 139, 250, 0.3)');
+                    gradient.addColorStop(1, 'rgba(167, 139, 250, 0)');
+                }
+
+                neuralCtx.beginPath();
+                neuralCtx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+                neuralCtx.fillStyle = gradient;
+                neuralCtx.fill();
+
+                neuralCtx.beginPath();
+                neuralCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                neuralCtx.fillStyle = this.firing ? '#22c55e' : '#60a5fa';
+                neuralCtx.fill();
+            }
+        }
+
+        const neurons = [];
+        const neuronCount = 40;
+
+        function initNeurons() {
+            neurons.length = 0;
+            const centerX = neuralCanvas.width / 2;
+            const centerY = neuralCanvas.height / 2;
+            const maxRadius = Math.min(neuralCanvas.width, neuralCanvas.height) * 0.4;
+
+            for (let i = 0; i < neuronCount; i++) {
+                const angle = (i / neuronCount) * Math.PI * 2 + Math.random() * 0.5;
+                const radius = Math.random() * maxRadius;
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+                neurons.push(new Neuron(x, y));
+            }
+
+            // Create connections
+            neurons.forEach((neuron, i) => {
+                const connectionCount = Math.floor(Math.random() * 3) + 2;
+                for (let j = 0; j < connectionCount; j++) {
+                    const targetIndex = Math.floor(Math.random() * neurons.length);
+                    if (targetIndex !== i) {
+                        neuron.connections.push(targetIndex);
+                    }
+                }
+            });
+        }
+        initNeurons();
+        window.addEventListener('resize', initNeurons);
+
+        let signalParticles = [];
+
+        class SignalParticle {
+            constructor(startNeuron, endNeuron) {
+                this.start = startNeuron;
+                this.end = endNeuron;
+                this.progress = 0;
+                this.speed = 0.02 + Math.random() * 0.02;
+            }
+
+            update() {
+                this.progress += this.speed;
+                return this.progress < 1;
+            }
+
+            draw() {
+                const x = this.start.x + (this.end.x - this.start.x) * this.progress;
+                const y = this.start.y + (this.end.y - this.start.y) * this.progress;
+
+                neuralCtx.beginPath();
+                neuralCtx.arc(x, y, 3, 0, Math.PI * 2);
+                neuralCtx.fillStyle = '#22c55e';
+                neuralCtx.fill();
+            }
+        }
+
+        function animateNeural(time) {
+            neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+
+            // Draw connections
+            neurons.forEach(neuron => {
+                neuron.connections.forEach(targetIndex => {
+                    const target = neurons[targetIndex];
+                    neuralCtx.beginPath();
+                    neuralCtx.moveTo(neuron.x, neuron.y);
+                    neuralCtx.lineTo(target.x, target.y);
+                    neuralCtx.strokeStyle = 'rgba(96, 165, 250, 0.15)';
+                    neuralCtx.lineWidth = 1;
+                    neuralCtx.stroke();
+                });
+            });
+
+            // Update and draw neurons
+            neurons.forEach(neuron => {
+                neuron.pulse(time);
+                neuron.draw();
+
+                // Fire signal particles
+                if (neuron.firing && neuron.fireTimer === 29) {
+                    neuron.connections.forEach(targetIndex => {
+                        if (Math.random() < 0.5) {
+                            signalParticles.push(new SignalParticle(neuron, neurons[targetIndex]));
+                        }
+                    });
+                }
+            });
+
+            // Update and draw signal particles
+            signalParticles = signalParticles.filter(particle => {
+                particle.draw();
+                return particle.update();
+            });
+
+            requestAnimationFrame(animateNeural);
+        }
+        animateNeural(0);
+
+        // Form handlers
+        function handleNotify(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            alert(currentLang === 'en' ? 
+                `Thank you! We'll notify you at ${email} when we launch.` : 
+                `¡Gracias! Te notificaremos a ${email} cuando lancemos.`);
+            e.target.reset();
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            alert(currentLang === 'en' ? 
+                'Thank you for your message. We\'ll be in touch soon.' : 
+                'Gracias por tu mensaje. Te contactaremos pronto.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
