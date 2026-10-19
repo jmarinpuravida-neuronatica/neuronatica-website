@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jmarinpuravida-neuronatica.github.io/neuronatica-website/sitemap.xml
